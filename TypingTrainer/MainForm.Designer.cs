@@ -38,10 +38,9 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
-            label1.Location = new Point(63, 37);
-            label1.Margin = new Padding(2, 0, 2, 0);
+            label1.Location = new Point(90, 62);
             label1.Name = "label1";
-            label1.Size = new Size(218, 32);
+            label1.Size = new Size(323, 48);
             label1.TabIndex = 0;
             label1.Text = "Тренажёр печати";
             label1.TextAlign = ContentAlignment.TopCenter;
@@ -50,10 +49,9 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 9F);
-            label2.Location = new Point(43, 95);
-            label2.Margin = new Padding(2, 0, 2, 0);
+            label2.Location = new Point(61, 158);
             label2.Name = "label2";
-            label2.Size = new Size(105, 15);
+            label2.Size = new Size(156, 25);
             label2.TabIndex = 1;
             label2.Text = "Выберите режим:";
             // 
@@ -65,9 +63,10 @@
             comboBoxTextSelection.Font = new Font("Segoe UI", 11F);
             comboBoxTextSelection.ForeColor = SystemColors.ButtonFace;
             comboBoxTextSelection.FormattingEnabled = true;
-            comboBoxTextSelection.Location = new Point(43, 113);
+            comboBoxTextSelection.Location = new Point(61, 188);
+            comboBoxTextSelection.Margin = new Padding(4, 5, 4, 5);
             comboBoxTextSelection.Name = "comboBoxTextSelection";
-            comboBoxTextSelection.Size = new Size(275, 28);
+            comboBoxTextSelection.Size = new Size(391, 38);
             comboBoxTextSelection.TabIndex = 2;
             // 
             // buttonStart
@@ -76,27 +75,26 @@
             buttonStart.FlatStyle = FlatStyle.Flat;
             buttonStart.Font = new Font("Segoe UI", 11F);
             buttonStart.ForeColor = SystemColors.ButtonFace;
-            buttonStart.Location = new Point(43, 175);
-            buttonStart.Margin = new Padding(2, 2, 2, 2);
+            buttonStart.Location = new Point(61, 292);
             buttonStart.Name = "buttonStart";
-            buttonStart.Size = new Size(274, 47);
+            buttonStart.Size = new Size(391, 78);
             buttonStart.TabIndex = 3;
             buttonStart.Text = "Начать";
             buttonStart.UseVisualStyleBackColor = false;
+            buttonStart.Click += ButtonStart_Click;
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(30, 30, 30);
-            ClientSize = new Size(346, 252);
+            ClientSize = new Size(494, 420);
             Controls.Add(buttonStart);
             Controls.Add(comboBoxTextSelection);
             Controls.Add(label2);
             Controls.Add(label1);
             ForeColor = SystemColors.ButtonFace;
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Margin = new Padding(2, 2, 2, 2);
             MaximizeBox = false;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;

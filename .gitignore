@@ -60,3 +60,4 @@ nunit-*.xml
 *.user
 *.suo
 *.cache
+*/.vs
