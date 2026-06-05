@@ -1,4 +1,5 @@
-﻿using Timer = System.Windows.Forms.Timer;
+﻿using System.Runtime.InteropServices;
+using Timer = System.Windows.Forms.Timer;
 
 
 namespace TypingTrainer
@@ -6,38 +7,43 @@ namespace TypingTrainer
     public partial class GameForm : Form
     {
         private int _secondsCounter = 0;
-        private Timer _timer = new Timer();
+        private Timer _timer = new();
 
         private string _targetText = "";
         private int _mistakesCount = 0;
 
-        public GameForm(string sampleText)
+        // убирает синее мерцание текста
+        private const int WM_SETREDRAW = 0x000B;
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
+
+
+        public GameForm(string targetText)
         {
             InitializeComponent();
             InitializeTimer();
             UpdateStats();
 
-            _targetText = sampleText;
-            richTextBoxSampleText.Text = _targetText;
+            _targetText = targetText;
+            richTextBoxTargetText.Text = _targetText;
 
             richTextBoxUserInput.TextChanged += RichTextBoxUserInput_TextChanged;
         }
 
         private void RichTextBoxUserInput_TextChanged(object? sender, EventArgs e)
         {
+            SendMessage(richTextBoxUserInput.Handle, WM_SETREDRAW, IntPtr.Zero, IntPtr.Zero);
+
             string userText = richTextBoxUserInput.Text;
             _mistakesCount = 0;
-
             int selectionStart = richTextBoxUserInput.SelectionStart;
-            int selectionLength = richTextBoxUserInput.SelectionLength;
+            //int selectionLength = richTextBoxUserInput.SelectionLength;
 
             for (int i = 0; i < userText.Length; i++)
             {
-                if (i >= _targetText.Length) break;
-
                 richTextBoxUserInput.Select(i, 1);
 
-                if (userText[i] != _targetText[i])
+                if (i >= _targetText.Length || userText[i] != _targetText[i])
                 {
                     _mistakesCount++;
                     richTextBoxUserInput.SelectionColor = Color.Red;
@@ -47,13 +53,20 @@ namespace TypingTrainer
                     richTextBoxUserInput.SelectionColor = Color.White; 
                 }
             }
-            richTextBoxUserInput.Select(selectionStart, selectionLength);
+
+            richTextBoxUserInput.SelectionStart = selectionStart;
+            richTextBoxUserInput.SelectionLength = 0;
+            richTextBoxUserInput.SelectionColor = Color.White;
+
+            SendMessage(richTextBoxUserInput.Handle, WM_SETREDRAW, new IntPtr(1), IntPtr.Zero);
+            richTextBoxUserInput.Refresh();
 
             UpdateStats();
 
-            if (userText == _targetText || userText.Length == _targetText.Length)
+            if (userText.Length >= _targetText.Length)
                 FinishGame();
         }
+
 
         private void InitializeTimer()
         {
