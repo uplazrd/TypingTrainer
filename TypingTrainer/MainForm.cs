@@ -2,38 +2,37 @@
 {
     public partial class MainForm : Form
     {
-        enum Levels { RussianTextOnly = 0, RussianPunctuation, RussianMix, EnglishTextOnly }
-        private int _selectedIndex;
-
-        List<string> sampleTexts = new List<string>()
-        {
-            "Это пример текста, который нужно ввести",
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ullamcorper, leo non sollicitudin gravida, elit neque mattis neque, et tempus neque urna at nulla.",
-            "Fusce pulvinar metus dolor, et posuere sem lobortis lobortis. Fusce dapibus nunc vel lorem sagittis luctus. Duis interdum justo non massa suscipit, ut condimentum turpis dapibus.",
-            "Vivamus eget sollicitudin mauris. Sed egestas, enim vel porta hendrerit, orci ante laoreet dui, eget commodo ex sem congue ligula.",
-            // В будущем заменить на автогенерируемый текст
-        };
+        enum Levels { RussianTextOnly = 0, RussianPunctuation, English }
         public MainForm()
         {
             InitializeComponent();
             LoadItemsToComboBox();
+            SetupNumericUpDown();
         }
 
         private void LoadItemsToComboBox()
         {
             comboBoxTextSelection.Items.Add("Русский (только текст)");
             comboBoxTextSelection.Items.Add("Русский (пунктуация)");
-            comboBoxTextSelection.Items.Add("Русский + Английский (микс)");
-            comboBoxTextSelection.Items.Add("Английский (только текст)");
+            comboBoxTextSelection.Items.Add("Английский");
             comboBoxTextSelection.SelectedIndex = 0;
+        }
+        private void SetupNumericUpDown()
+        {
+            numericUpDownLength.Minimum   = 5;
+            numericUpDownLength.Maximum   = 50;
+            numericUpDownLength.Value     = 20;
+            numericUpDownLength.Increment = 5;
         }
 
         private void ButtonStart_Click(object sender, EventArgs e)
         {
+            int  _targetLength = (int)numericUpDownLength.Value;
+            int _selectedIndex = comboBoxTextSelection.SelectedIndex;
 
-            _selectedIndex = comboBoxTextSelection.SelectedIndex;
-            string sampleText = sampleTexts[_selectedIndex];
-            GameForm gameForm = new GameForm(sampleText);
+            //string targetText = TextGenerator.Generate(_selectedIndex, _targetLength);
+            string targetText = "Это пример текста, который нужно ввести";
+            GameForm gameForm = new GameForm(targetText);
 
             this.Hide();
             gameForm.ShowDialog();

@@ -74,7 +74,7 @@
             buttonRestart.Font = new Font("Segoe UI", 11F);
             buttonRestart.ForeColor = SystemColors.ButtonFace;
             buttonRestart.Location = new Point(573, 318);
-            buttonRestart.Margin = new Padding(2, 2, 2, 2);
+            buttonRestart.Margin = new Padding(2);
             buttonRestart.Name = "buttonRestart";
             buttonRestart.Size = new Size(239, 62);
             buttonRestart.TabIndex = 3;
@@ -86,7 +86,7 @@
             // 
             richTextBoxTargetText.BackColor = Color.FromArgb(45, 45, 45);
             richTextBoxTargetText.BorderStyle = BorderStyle.None;
-            richTextBoxTargetText.Font = new Font("Consolas", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            richTextBoxTargetText.Font = new Font("Consolas", 15F, FontStyle.Regular, GraphicsUnit.Point, 204);
             richTextBoxTargetText.ForeColor = SystemColors.ScrollBar;
             richTextBoxTargetText.Location = new Point(36, 101);
             richTextBoxTargetText.Name = "richTextBoxTargetText";
@@ -105,9 +105,9 @@
             groupBox1.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 204);
             groupBox1.ForeColor = SystemColors.ButtonFace;
             groupBox1.Location = new Point(36, 307);
-            groupBox1.Margin = new Padding(2, 2, 2, 2);
+            groupBox1.Margin = new Padding(2);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(2, 2, 2, 2);
+            groupBox1.Padding = new Padding(2);
             groupBox1.Size = new Size(512, 139);
             groupBox1.TabIndex = 101;
             groupBox1.TabStop = false;
@@ -175,7 +175,7 @@
             buttonExit.Font = new Font("Segoe UI", 11F);
             buttonExit.ForeColor = SystemColors.ButtonFace;
             buttonExit.Location = new Point(573, 398);
-            buttonExit.Margin = new Padding(2, 2, 2, 2);
+            buttonExit.Margin = new Padding(2);
             buttonExit.Name = "buttonExit";
             buttonExit.Size = new Size(239, 47);
             buttonExit.TabIndex = 102;
@@ -187,13 +187,13 @@
             // 
             richTextBoxUserInput.BackColor = Color.FromArgb(45, 45, 48);
             richTextBoxUserInput.BorderStyle = BorderStyle.FixedSingle;
-            richTextBoxUserInput.Font = new Font("Consolas", 14F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            richTextBoxUserInput.Font = new Font("Consolas", 15F);
             richTextBoxUserInput.ForeColor = Color.White;
             richTextBoxUserInput.Location = new Point(36, 260);
             richTextBoxUserInput.Name = "richTextBoxUserInput";
             richTextBoxUserInput.ScrollBars = RichTextBoxScrollBars.None;
             richTextBoxUserInput.ShortcutsEnabled = false;
-            richTextBoxUserInput.Size = new Size(777, 26);
+            richTextBoxUserInput.Size = new Size(777, 28);
             richTextBoxUserInput.TabIndex = 100;
             richTextBoxUserInput.Text = "";
             // 
@@ -212,7 +212,7 @@
             Controls.Add(label1);
             ForeColor = SystemColors.ButtonFace;
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Margin = new Padding(2, 2, 2, 2);
+            Margin = new Padding(2);
             MaximizeBox = false;
             Name = "GameForm";
             StartPosition = FormStartPosition.CenterScreen;

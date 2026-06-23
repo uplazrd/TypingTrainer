@@ -1,7 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using Timer = System.Windows.Forms.Timer;
 
-
 namespace TypingTrainer
 {
     public partial class GameForm : Form
@@ -16,7 +15,6 @@ namespace TypingTrainer
         private const int WM_SETREDRAW = 0x000B;
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
-
 
         public GameForm(string targetText)
         {
@@ -37,7 +35,6 @@ namespace TypingTrainer
             string userText = richTextBoxUserInput.Text;
             _mistakesCount = 0;
             int selectionStart = richTextBoxUserInput.SelectionStart;
-            //int selectionLength = richTextBoxUserInput.SelectionLength;
 
             for (int i = 0; i < userText.Length; i++)
             {
@@ -60,13 +57,11 @@ namespace TypingTrainer
 
             SendMessage(richTextBoxUserInput.Handle, WM_SETREDRAW, new IntPtr(1), IntPtr.Zero);
             richTextBoxUserInput.Refresh();
-
             UpdateStats();
 
             if (userText.Length >= _targetText.Length)
                 FinishGame();
         }
-
 
         private void InitializeTimer()
         {
@@ -81,7 +76,6 @@ namespace TypingTrainer
             UpdateStats();
         }
 
-
         private void UpdateStats()
         {
             int inputLength = richTextBoxUserInput.Text.Length;
@@ -91,10 +85,7 @@ namespace TypingTrainer
             int correctChars = inputLength - _mistakesCount;
             if (correctChars < 0) correctChars = 0;
 
-            int speed = _secondsCounter > 0
-                ? (int)((correctChars / (double)_secondsCounter) * 60)
-                : 0;
-
+            int speed = _secondsCounter > 0 ? (int)((correctChars / (double)_secondsCounter) * 60) : 0;
 
             labelInputChars.Text  = $"Введено символов: {inputLength}";
             labelRemainChars.Text = $"Осталось символов: {remainChars}";
@@ -128,10 +119,10 @@ namespace TypingTrainer
 
             string verdict = mistakePercentage switch
             {
-                0 => "Прекрасно! Ни одной ошибки!",
-                <= 5 => "Хорошо! Достойно.",
+                0 => "Достойно! Ни одной ошибки.",
+                <= 5 => "Хороший результат.",
                 <= 20 => "Бро, тебе нужно тренироваться!",
-                _ => "Даже моя бабка лучше печатает"
+                _ => "Плохо. Очень много ошибок."
             };
 
             string summary = $"{verdict}\n\n" +
