@@ -10,6 +10,7 @@
             SetupNumericUpDown();
         }
 
+        /// <summary> Заполняет выпадающий список доступными языковыми режимами </summary>
         private void LoadItemsToComboBox()
         {
             comboBoxTextSelection.Items.Add("Русский (только текст)");
@@ -17,6 +18,8 @@
             comboBoxTextSelection.Items.Add("Английский");
             comboBoxTextSelection.SelectedIndex = 0;
         }
+
+        /// <summary> Настраивает минимальные, максимальные и начальные значения для выбора длины текста </summary>
         private void SetupNumericUpDown()
         {
             numericUpDownLength.Minimum   = 5;
@@ -25,13 +28,12 @@
             numericUpDownLength.Increment = 5;
         }
 
+        /// <summary> Обрабатывает нажатие кнопки старта: генерирует текст и запускает игровую форму </summary>
         private void ButtonStart_Click(object sender, EventArgs e)
         {
             int  _targetLength = (int)numericUpDownLength.Value;
             int _selectedIndex = comboBoxTextSelection.SelectedIndex;
-
-            //string targetText = TextGenerator.Generate(_selectedIndex, _targetLength);
-            string targetText = "Это пример текста, который нужно ввести";
+            string targetText = TextGenerator.Generate(_selectedIndex, _targetLength);
             GameForm gameForm = new GameForm(targetText);
 
             this.Hide();

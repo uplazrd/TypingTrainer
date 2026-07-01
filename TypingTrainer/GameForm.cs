@@ -7,7 +7,6 @@ namespace TypingTrainer
     {
         private int _secondsCounter = 0;
         private Timer _timer = new();
-
         private string _targetText = "";
         private int _mistakesCount = 0;
 
@@ -16,20 +15,21 @@ namespace TypingTrainer
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
 
+        /// <summary> Инициализирует новую тренировочную сессию с заданным целевым текстом </summary>
         public GameForm(string targetText)
         {
             InitializeComponent();
             InitializeTimer();
             UpdateStats();
-
             _targetText = targetText;
             richTextBoxTargetText.Text = _targetText;
-
             richTextBoxUserInput.TextChanged += RichTextBoxUserInput_TextChanged;
         }
 
+        /// <summary> Обработчик изменения текста: проверяет ввод на ошибки, подсвечивает символы и обновляет статистику </summary>
         private void RichTextBoxUserInput_TextChanged(object? sender, EventArgs e)
         {
+            // убирает синее мерцание текста
             SendMessage(richTextBoxUserInput.Handle, WM_SETREDRAW, IntPtr.Zero, IntPtr.Zero);
 
             string userText = richTextBoxUserInput.Text;
@@ -39,16 +39,13 @@ namespace TypingTrainer
             for (int i = 0; i < userText.Length; i++)
             {
                 richTextBoxUserInput.Select(i, 1);
-
                 if (i >= _targetText.Length || userText[i] != _targetText[i])
                 {
                     _mistakesCount++;
                     richTextBoxUserInput.SelectionColor = Color.Red;
                 }
                 else
-                {
                     richTextBoxUserInput.SelectionColor = Color.White; 
-                }
             }
 
             richTextBoxUserInput.SelectionStart = selectionStart;
@@ -59,10 +56,10 @@ namespace TypingTrainer
             richTextBoxUserInput.Refresh();
             UpdateStats();
 
-            if (userText.Length >= _targetText.Length)
-                FinishGame();
+            if (userText.Length >= _targetText.Length) FinishGame();
         }
 
+        /// <summary> Инициализирует и запускает таймер с интервалом в 1 секунду </summary>
         private void InitializeTimer()
         {
             _timer.Interval = 1000;
@@ -70,12 +67,14 @@ namespace TypingTrainer
             _timer.Start();
         }
 
+        /// <summary> Обрабатывает каждый тик таймера, увеличивая счетчик времени </summary>
         private void SecondsTimer_Tick(object? sender, EventArgs e)
         {
             _secondsCounter++;
             UpdateStats();
         }
 
+        /// <summary> Динамически обновляет статистику тренировки </summary>
         private void UpdateStats()
         {
             int inputLength = richTextBoxUserInput.Text.Length;
@@ -98,6 +97,7 @@ namespace TypingTrainer
         private void ButtonExit_Click(object sender, EventArgs e) => this.Close();
         private void ButtonRestart_Click(object sender, EventArgs e) => RestartGame();
 
+        /// <summary> Сбрасывает статистику, не трогая текст. </summary>
         private void RestartGame()
         {
             _timer.Stop();
@@ -109,19 +109,18 @@ namespace TypingTrainer
             richTextBoxUserInput.Focus();
         }
 
+        /// <summary> Заканчивает тренировку и выводит окно с результатами. </summary>
         private void FinishGame()
         {
             _timer.Stop();
-
             double mistakePercentage = _targetText.Length > 0
-                ? ((double)_mistakesCount / _targetText.Length) * 100
-                : 0;
+                ? ((double)_mistakesCount / _targetText.Length) * 100 : 0;
 
             string verdict = mistakePercentage switch
             {
                 0 => "Достойно! Ни одной ошибки.",
                 <= 5 => "Хороший результат.",
-                <= 20 => "Бро, тебе нужно тренироваться!",
+                <= 20 => "Сойдёт. Но тебе нужно тренироваться!",
                 _ => "Плохо. Очень много ошибок."
             };
 
